@@ -73,7 +73,7 @@ class _SearchTabState extends State<SearchTab> with Runner<SearchTab> {
     ];
   }
 
-  List<Fact> _removed(ApiResult r) => [Fact('Done', 'removed', Tone.good)];
+  List<Fact> _removed(ApiResult r) => const [Fact('Done', 'removed', Tone.good)];
 
   Future<ApiResult> _afterLiveness() async {
     final body = <String, Object?>{
@@ -112,7 +112,7 @@ class _SearchTabState extends State<SearchTab> with Runner<SearchTab> {
 
   @override
   Widget build(BuildContext context) {
-    final c = '/v1/face-search/collections';
+    const c = '/v1/face-search/collections';
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: ListenableBuilder(

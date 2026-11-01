@@ -1,6 +1,5 @@
 // Shared look and small building blocks, so every tab reads the same way.
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
