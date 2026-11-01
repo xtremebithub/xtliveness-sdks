@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "target": "ES2019", "module": "ES2020", "moduleResolution": "Bundler", "lib": ["ES2019"], "declaration": true, "outDir": "dist", "rootDir": "src",
+    "strict": true, "jsx": "react-native", "skipLibCheck": true, "esModuleInterop": true
+  },
+  "include": ["src"]
+}

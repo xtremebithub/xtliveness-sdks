@@ -1,0 +1,31 @@
+# Publishes the Flutter package to pub.dev when a tag like flutter-v1.1.2 is pushed. No pub.dev password is stored: pub.dev trusts this workflow
+# (package page -> Admin -> Automated publishing -> GitHub Actions: repository xtremebithub/xtliveness-sdks, tag pattern flutter-v{{version}}).
+# The very first release of a package must be done by hand (flutter pub publish); after that, tags do it.
+name: publish-flutter
+on:
+  push:
+    tags: ['flutter-v[0-9]+.[0-9]+.[0-9]+*']
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pub.dev
+    permissions:
+      id-token: write       # lets pub.dev verify this run
+      contents: read
+    defaults:
+      run:
+        working-directory: flutter
+    steps:
+      - uses: actions/checkout@v4
+      - name: The tag must match the version in pubspec.yaml
+        run: |
+          v=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          [ "${GITHUB_REF_NAME}" = "flutter-v${v}" ] || { echo "tag ${GITHUB_REF_NAME} does not match pubspec version ${v}"; exit 1; }
+      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable }
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter pub publish --dry-run
+      - run: flutter pub publish --force

@@ -21,6 +21,9 @@ Results: `completed(sessionId)`, `cancelled`, `error(code)`. Codes: `token_inval
 ## How the check page talks to each SDK
 The check page reports through a channel called `XtlBridge` when it is in a native web view, and through `postMessage` to its parent when it is in an iframe. Each mobile SDK creates that channel for the page (Android `addJavascriptInterface`, iOS a script message handler, React Native a small injected script), so the service needs no change for any of them.
 
+## Spoken guidance in mobile apps
+The check reads its instructions aloud and a WebView's own speech is often silent. The Flutter SDK speaks for the page with the phone's text-to-speech automatically; the React Native SDK does the same when you pass `speech` (expo-speech or react-native-tts, see its README). Both rely on the page's `xtl:speak` message. Flutter and React Native each have a demo app (`flutter/example`, `react-native/example`) with Liveness, Face search and Identity tabs.
+
 ## Websites and Flutter web
 The page that shows the check must be listed under **Websites allowed to show your check** (console, Check settings) and be served over https (or be `localhost`), or the browser will refuse the frame or the camera.
 

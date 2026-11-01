@@ -1,0 +1,51 @@
+{
+  "name": "xtliveness-react-native",
+  "version": "1.1.0",
+  "description": "Face liveness check for React Native apps on Android and iOS: runs the hosted check in a WebView with the camera and reports when the person is done.",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "liveness",
+    "face-recognition",
+    "identity-verification",
+    "kyc",
+    "camera",
+    "react-native"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./dist/index.js",
+  "source": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "test": "npm run build && node --test test/*.test.js"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.72",
+    "react-native-webview": ">=13.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "react": "^18.3.1",
+    "react-native": "^0.76.0",
+    "react-native-webview": "^13.12.0",
+    "typescript": "^5.6.0"
+  }
+}

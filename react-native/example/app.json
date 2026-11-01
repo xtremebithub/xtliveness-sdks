@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "xtliveness demo",
+    "slug": "xtliveness-demo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.xtremebit.xtlivenessdemo",
+      "infoPlist": {
+        "NSCameraUsageDescription": "We use the camera to check that it is really you.",
+        "NSPhotoLibraryUsageDescription": "The demo lets you pick photos to compare faces."
+      }
+    },
+    "android": {
+      "package": "com.xtremebit.xtlivenessdemo",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.INTERNET"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "We use the camera to take a photo to compare.",
+          "photosPermission": "The demo lets you pick photos to compare faces."
+        }
+      ],
+      "expo-status-bar"
+    ]
+  }
+}

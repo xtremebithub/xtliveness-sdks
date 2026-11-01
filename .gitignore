@@ -1,0 +1,8 @@
+node_modules/
+dist/
+build/
+.gradle/
+.dart_tool/
+.build/
+*.iml
+local.properties
