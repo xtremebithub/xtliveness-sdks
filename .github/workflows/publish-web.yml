@@ -1,0 +1,39 @@
+# Publishes xtliveness-web to npm when a tag like web-v1.1.1 is pushed. No npm password or token is stored: npm trusts this workflow
+# (npmjs.com -> the package -> Settings -> Trusted Publisher -> GitHub Actions: organization xtremebithub, repository xtliveness-sdks,
+# workflow filename publish-web.yml, environment npm).
+# The first release of a package is done by hand; after that, tags do it. To release: bump "version" in web/package.json,
+# add it to CHANGELOG.md, commit, then:  git tag web-v1.1.1 && git push origin web-v1.1.1
+name: publish-web
+on:
+  push:
+    tags: ['web-v[0-9]+.[0-9]+.[0-9]+*']
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      id-token: write       # lets npm verify this run
+      contents: read
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - name: The tag must match the version in package.json
+        run: |
+          v=$(node -p "require('./package.json').version")
+          [ "${GITHUB_REF_NAME}" = "web-v${v}" ] || { echo "tag ${GITHUB_REF_NAME} does not match package.json version ${v}"; exit 1; }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24          # npm 11.5+ is needed for trusted publishing
+          registry-url: https://registry.npmjs.org
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - run: npm pack --dry-run
+      # A pre-release such as 1.2.0-beta.1 goes out under the "next" tag so it never becomes what people get by default.
+      - name: Publish
+        run: |
+          case "$(node -p "require('./package.json').version")" in
+            *-*) npm publish --access public --tag next ;;
+            *)   npm publish --access public ;;
+          esac

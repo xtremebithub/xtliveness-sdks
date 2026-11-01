@@ -31,7 +31,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json",
-    "test": "npm run build && node --test test/*.test.js"
+    "test": "npm run build && node --test test/*.test.js",
+    "prepack": "npm run build"
   },
   "peerDependencies": {
     "react": ">=17"
